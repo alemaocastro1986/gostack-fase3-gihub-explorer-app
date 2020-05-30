@@ -18,7 +18,7 @@ html,body {
 }
 
 body, input, button {
-  font: 16px;
+  font-size: 16px;
   font-family: Roboto, sans-serif;
 }
 
