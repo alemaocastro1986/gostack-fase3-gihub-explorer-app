@@ -113,3 +113,5 @@ export const Issues = styled.div`
     }
   }
 `;
+
+export const Loading = styled.p``;
