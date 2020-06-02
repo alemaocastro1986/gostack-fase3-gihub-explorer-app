@@ -42,6 +42,7 @@
       }
     ],
     "import/prefer-default-export": "off",
+    "react/jsx-one-expression-per-line": ["off", { "allow": "single-child" }],
     "import/extensions": [
       "error",
       "ignorePackages",
