@@ -1,11 +1,11 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import { FiChevronRight } from 'react-icons/fi';
 import appLogo from '../../assets/logo.svg';
 
 import apiClient from '../../services/apiClient';
 
-import { Title, Form, Repositories } from './styles';
+import { Title, Form, Repositories, Error } from './styles';
 
 interface Repository {
   full_name: string;
@@ -18,22 +18,32 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   const [repository, setRepository] = useState('');
+  const [repositoryError, setRepositoryError] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   async function handleAddRepository(
     e: FormEvent<HTMLFormElement>
   ): Promise<void> {
     e.preventDefault();
-    const { data } = await apiClient.get<Repository>(`repos/${repository}`);
-    setRepositories([...repositories, data]);
-    setRepository('');
+    if (!repository) {
+      setRepositoryError('Digite um autor/nome do repositório');
+      return;
+    }
+    try {
+      const { data } = await apiClient.get<Repository>(`repos/${repository}`);
+      setRepositories([...repositories, data]);
+      setRepository('');
+      setRepositoryError('');
+    } catch (err) {
+      setRepositoryError('Erro na busca por este repositório');
+    }
   }
 
   return (
     <>
       <img src={appLogo} alt="Github Explorer" />
       <Title>Explore repositórios no Github</Title>
-      <Form onSubmit={handleAddRepository}>
+      <Form hasError={!!repositoryError} onSubmit={handleAddRepository}>
         <input
           value={repository}
           onChange={e => setRepository(e.target.value)}
@@ -42,6 +52,7 @@ const Dashboard: React.FC = () => {
         />
         <button type="submit">Pesquisar</button>
       </Form>
+      {repositoryError && <Error>{repositoryError}</Error>}
       <Repositories>
         {repositories.map(repo => (
           <a key={repo.full_name} href="teste">
