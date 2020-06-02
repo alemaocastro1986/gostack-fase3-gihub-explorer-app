@@ -10,11 +10,15 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%
+}
+
 body {
-  background: #f0f0f5 ;
-  background: url(${githubBackground}) no-repeat 70% top;
+  background: #f0f0f5 url(${githubBackground}) no-repeat 70% top;
   -webkit-font-smoothing: antialiased;
 }
+
 
 body, input, button {
   font-size: 16px;
