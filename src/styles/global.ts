@@ -10,7 +10,7 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
-html,body {
+body {
   background: #f0f0f5 url(${githubBackground}) no-repeat 70% top;
   -webkit-font-smoothing: antialiased;
 
